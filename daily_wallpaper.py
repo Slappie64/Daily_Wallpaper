@@ -1,9 +1,11 @@
 #! /usr/bin/python3
 
 # Imports
-import requests
+import secret
+from pexels_api import API
 
-url = 'https://www.pexels.com/search/abstract/?orientation=landscape'
-page = requests.get(url)
-
-print(page.text)
+api = API(secret.api_key)
+api.search('Abstract', page=1, results_per_page=10)
+photos = api.get_entries()
+for photo in photos:
+    print(photo.url)
