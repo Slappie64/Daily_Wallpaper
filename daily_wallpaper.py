@@ -1,11 +1,21 @@
 #! /usr/bin/python3
 
 # Imports
-import secret
-from pexels_api import API
+import requests
+from bs4 import BeautifulSoup 
 
-api = API(secret.api_key)
-api.search('Abstract', page=1, results_per_page=10)
-photos = api.get_entries()
-for photo in photos:
-    print(photo.url)
+image_search_url = 'https://www.pexels.com/search/nature/?size=large&orientation=landscape'
+image_search_data = requests.get(image_search_url)
+
+soup = BeautifulSoup(image_search_data.content, 'html.parser')
+
+for i in soup:
+    print(i)
+
+image_url = 'https://images.pexels.com/photos/844297/pexels-photo-844297.jpeg?auto=compress&cs=tinysrgb&w=400'
+image_data = requests.get(image_url).content
+
+image_name = 'name'
+
+with open (image_name, 'wb') as handler:
+    handler.write(image_data)
